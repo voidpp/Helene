@@ -7,8 +7,6 @@ import '../html';
 import DataActionTypes from '../constants/DataConstants';
 import DataRequestActionCreator, {DataRequestDescriptor, ServiceDescriptor} from '../actions/DataRequestActionCreator';
 
-import Logger, {LogLevels} from '../logger/Logger';
-
 import Panel from '../components/Panel';
 import CurrentWeather from '../components/CurrentWeather';
 import Clock from '../components/Clock';
