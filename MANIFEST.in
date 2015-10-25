@@ -1,0 +1,2 @@
+recursive-include helene/static *.*
+recursive-include helene/templates *.*

@@ -1,0 +1,95 @@
+
+@import '../common';
+
+$bg_image: '/static/pic/polygon_green-wallpaper-1280x1024.jpg';
+
+.body {
+    background-image: url($bg_image);
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.panel {
+    position: absolute;
+    text-align: center;
+}
+
+.torrent_list {
+    font-size: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+}
+
+.torrent_status {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.short_forecast {
+    width: 100%;
+    height: 100%;
+}
+
+.empty {
+    display: inline-block;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+.transmission {
+    @include bgimage('/static/pic/transmission-logo.png', 0.1);
+}
+
+.server {
+    @include bgimage('/static/pic/server128.png', 0.1);
+}
+
+.network {
+    @include bgimage('/static/pic/network.png', 0.1);
+    @extend .center;
+    .router {
+        width: 300px;
+    }
+}
+
+.server_info {
+    @extend .center;
+}
+
+.plutonium {
+    @include bgimage('/static/pic/rss32.png', 0.5);
+    &:before {
+        background-position: left top;
+    }
+    padding-left: 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 5px;
+    th {
+        font-size: 12px;
+        text-align: left;
+    }
+    td, th {
+        padding: 3px 5px;
+    }
+}
+
+.date-picker {
+    .dp-table {
+        display: table;
+        border-collapse: collapse;
+        border-spacing: 0;
+        .dp-row {
+            display: table-row;
+            .dp-cell {
+                display: table-cell;
+                padding: 0;
+                vertical-align: middle;
+            }
+        }
+    }
+}

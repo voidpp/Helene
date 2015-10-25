@@ -1,0 +1,82 @@
+{
+    "2014-10-23": {
+        "type": "nwd",
+        "repeat": true,
+        "desc": "1956-os forradalom évfordulója"
+    },
+    "2015-11-01": {
+        "type": "nwd",
+        "repeat": true,
+        "desc": "Mindenszentek"
+    },
+    "2015-12-12": {
+        "type": "wd",
+        "repeat": false,
+        "desc": "Dec 24 ledolgozása"
+    },
+    "2015-12-24": {
+        "type": "fd",
+        "repeat": true,
+        "desc": "Szenteste"
+    },
+    "2015-12-25": {
+        "type": "nwd",
+        "repeat": true,
+        "desc": "Karácsony"
+    },
+    "2015-12-26": {
+        "type": "nwd",
+        "repeat": true,
+        "desc": "Karácsony"
+    },
+    "2016-01-01": {
+        "type": "fd",
+        "repeat": true,
+        "desc": "Újév"
+    },
+    "2016-03-05": {
+        "type": "wd",
+        "repeat": false,
+        "desc": "Március 14 ledolgozása"
+    },
+    "2016-03-14": {
+        "type": "fd",
+        "repeat": false,
+        "desc": "Hosszú hétvége"
+    },
+    "2016-03-15": {
+        "type": "nwd",
+        "repeat": true,
+        "desc": "1848-as forradalom"
+    },
+    "2016-03-28": {
+        "type": "nwd",
+        "repeat": false,
+        "desc": "Húsvét"
+    },
+    "2016-05-01": {
+        "type": "nwd",
+        "repeat": true,
+        "desc": "A munka ünnepe"
+    },
+    "2016-05-16": {
+        "type": "nwd",
+        "repeat": false,
+        "desc": "Pünkösd"
+    },
+    "2016-08-20": {
+        "type": "nwd",
+        "repeat": true,
+        "desc": "Az államalapitas ünnepe"
+    },
+    "2016-10-15": {
+        "type": "wd",
+        "repeat": false,
+        "desc": "Október 31 ledolgozása"
+    },
+    "2016-10-31": {
+        "type": "fd",
+        "repeat": false,
+        "desc": "Hosszú hétvége"
+    }
+}

@@ -1,0 +1,333 @@
+
+@font-face {
+    font-family: Digital7;
+    src: url('/static/fonts/digital7.otf');
+}
+
+@font-face {
+    font-family: Futura;
+    src: url('/static/fonts/hfutura2.otf');
+}
+
+@mixin bgimage($url, $opacity) {
+    &:before {
+        content: ' ';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: $opacity;
+        background: url($url) center center no-repeat;
+    }
+}
+
+.center-v {
+    > * {
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+    }
+}
+
+.center-h {
+    > * {
+        position: absolute;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+    }
+}
+
+.center {
+    > * {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+    }
+}
+
+@import 'react_datetime_picker';
+
+$panel_color: rgba(255,255,255,0.3);
+
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    // cursor: none;
+    color: white;
+    text-shadow: 0 0 10px black;
+    overflow: hidden;
+    font-family: Futura;
+    letter-spacing: 2px;
+    background-color: black;
+}
+
+.panel {
+    background-color: $panel_color;
+}
+
+.block {
+    width: 10px;
+    height: 10px;
+}
+
+.current_weather {
+    line-height: normal;
+    .temp {
+        font-size: 50px;
+        z-index: 10;
+        position: relative;
+        text-align: center;
+    }
+    .visible {
+        text-align: center;
+        img {
+            width: 150px;
+        }
+    }
+    .suntimes {
+        text-align: center;
+        .sunrise, .sunset {
+            padding-left: 20px;
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
+        .sunrise {
+            padding-right: 10px;
+            background-image: url(/static/pic/sunrise.png);
+        }
+        .sunset {
+            background-image: url(/static/pic/sunset.png);
+        }
+    }
+}
+
+.calendar {
+    padding-top: 10px;
+}
+
+.clock {
+    font-family: Digital7;
+    font-size: 200px;
+    height: 180px;
+    text-align: center;
+    line-height: normal;
+}
+
+.date {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    line-height: normal;
+}
+
+.short_forecast {
+    .temp {
+        font-size: 30px;
+        vertical-align: middle;
+    }
+    .image img {
+        height: 90px;
+    }
+    .time {
+        text-align: center;
+        font-size: 15px;
+    }
+    td {
+        text-align: center;
+    }
+}
+
+.long_forecast {
+    width: 100%;
+    table-layout: fixed;
+    .temp {
+    }
+    td {
+        text-align: center;
+    }
+    .day_text {
+        max-width: 50px;
+        overflow: hidden;
+    }
+    .image img {
+        max-width: 50px;
+    }
+}
+
+.long_chart {
+    .highcharts-container {
+        margin-top: -15px;
+    }
+}
+
+.progress {
+    width: 100px;
+    height: 3px;
+    background-color: rgba(255,255,255,0.5);
+    box-shadow: 0 0 3px black;
+    .value {
+        background-color: rgba(0,150,0, 0.8);
+        height: 100%;
+    }
+}
+
+.server_info {
+    table {
+        border-collapse: collapse;
+    }
+    td {
+        padding: 3px 5px;
+    }
+    th {
+        border-bottom: 1px solid white;
+    }
+    .status img {
+        max-width: 20px;
+    }
+    .ping {
+        text-align: right;
+    }
+    .timestamp {
+        font-size: 11px;
+        font-weight: normal;
+    }
+    .memory {
+        .progress {
+            width: 70px;
+        }
+    }
+}
+
+.room_temp {
+    @extend .center;
+    table {
+        border-collapse: collapse;
+    }
+    td {
+        padding: 3px 5px;
+        text-align: right;
+    }
+    tr  {
+        .current {
+            border-right: 1px solid white;
+        }
+        & td:first-child {
+            text-align: left;
+            &:first-letter {
+                text-transform: uppercase;
+            }
+        }
+    }
+    th {
+        font-size: 12px;
+        font-weight: normal;
+        border-bottom: 1px solid white;
+    }
+}
+
+.traffic_stat {
+    .icon {
+        padding: 0 10px 0 35px;
+        background-position: left center;
+        background-repeat: no-repeat;
+        background-size: 32px 32px;
+        display: inline-block;
+        text-align: left;
+    }
+    .down {
+        @extend .icon;
+        background-image: url('/static/pic/download.png');
+    }
+    .up {
+        @extend .icon;
+        background-image: url('/static/pic/upload.png');
+    }
+}
+
+.torrent_status {
+    text-align: right;
+    @extend .traffic_stat;
+    .traffic {
+        padding-top: 10px;
+    }
+}
+
+.torrent_list {
+    width: inherit;
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 3px 5px;
+    }
+    .eta {
+        width: 100px;
+    }
+    .name {
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 400px;
+        min-width: 400px;
+    }
+    .progress {
+        width: 150px;
+    }
+}
+
+.calendar {
+    width: 100%;
+    .title {
+        margin-bottom: -35px;
+        text-align: center;
+        &:first-letter {
+            text-transform: uppercase;
+        }
+    }
+    .date-picker {
+        background: inherit;
+        padding: 40px 5px 10px;
+        &, .dp-cell, .dp-row {
+            border: 0 !important;
+            border-left: 0 !important;
+            color: white !important;
+        }
+        .dp-next, .dp-prev {
+            opacity: 0.4;
+        }
+        .dp-week-day-names {
+            border-bottom: 1px solid white !important;
+        }
+        .dp-current {
+            background-color: rgba(#006699, 0.5) !important;
+        }
+        .cal_nwd {
+            color: rgba(190,0,0,1) !important;
+            text-shadow: 0 0 5px white !important;
+        }
+        .cal_fd {
+            color: rgba(0,200,0,1) !important;
+        }
+    }
+}
+
+.network {
+    @extend .traffic_stat;
+}
+
+.data_status {
+    @extend .center;
+    table {
+        font-size: 13px;
+        border-collapse: collapse;
+    }
+    th {
+        border-bottom: 1px solid rgba(255,255,255,0.5);
+    }
+    td, th {
+        padding: 2px 7px;
+    }
+}
