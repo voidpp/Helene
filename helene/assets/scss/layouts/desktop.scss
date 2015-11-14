@@ -18,7 +18,7 @@ $bg_image: '/static/pic/polygon_green-wallpaper-1280x1024.jpg';
     font-size: 13px;
     position: absolute;
     left: 0;
-    bottom: 5px;
+    bottom: 0;
 }
 
 .torrent_status {
@@ -64,6 +64,7 @@ $bg_image: '/static/pic/polygon_green-wallpaper-1280x1024.jpg';
     &:before {
         background-position: left top;
     }
+    border-collapse: initial;
     padding-left: 32px;
     position: absolute;
     top: 0;

@@ -3,6 +3,8 @@ import transmissionrpc
 from service import Service
 
 class Torrent(Service):
+    name = 'torrent'
+
     def __init__(self, config):
         self.config = config
         self.client = transmissionrpc.Client(self.config['host'], port = self.config['port'])

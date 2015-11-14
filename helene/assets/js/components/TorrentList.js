@@ -33,7 +33,9 @@ export class TorrentList extends React.Component {
             let torrent = this.state.list[hash];
             let percent = torrent.percentDone * 100;
             rows.push(tr(
-                td({className: 'name'}, torrent.name),
+                td({rowSpan: 2, className: 'download'}),
+                td({className: 'name', colSpan: '100%'}, torrent.name)
+            ), tr(
                 td(numeral(torrent.size).format('0.0 b')),
                 td(div({className: 'progress'}, div({className: 'value', style: {width: `${percent}%`}}))),
                 td(numeral(torrent.download_speed).format('0.0 b') + '/s'),

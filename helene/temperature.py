@@ -8,6 +8,8 @@ from models import Sensor, DataTiny
 Session = sqlalchemy.orm.sessionmaker()
 
 class Temperature(Service):
+    name = 'temperature'
+
     def __init__(self, config):
         self.config = config
         self.engine = sqlalchemy.create_engine('mysql://%(user)s:%(pass)s@%(host)s/%(name)s' % config, encoding = 'latin1')

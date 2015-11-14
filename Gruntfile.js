@@ -35,6 +35,11 @@ module.exports = function(grunt) {
         };
     }
 
+    function log1(err, stdout, stderr, cb) {
+        console.log(stdout);
+        cb();
+    }
+
 	grunt.initConfig({
 		browserify: {
 			dev: {
@@ -82,10 +87,12 @@ module.exports = function(grunt) {
 
         shell: {
             options: {
-                stderr: false
             },
             webserver: {
-                command: 'python run_dev_server.py'
+                command: 'python run_dev_server.py',
+                options: {
+                    callback: log1
+                }
             }
         },
 

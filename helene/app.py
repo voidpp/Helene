@@ -8,6 +8,7 @@ from helene.weather import Weather
 from helene.server_info import ServerInfo
 from helene.torrent import Torrent
 from helene.temperature import Temperature
+from helene.episode_tracking import EpisodeTracking
 
 from helene.config import config
 
@@ -29,6 +30,10 @@ services = [
     dict(
         url = 'temperature',
         handler = Temperature(config['temperature_database']),
+    ),
+    dict(
+        url = 'episode_tracking',
+        handler = EpisodeTracking(config['episode_tracking']),
     ),
 ]
 

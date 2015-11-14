@@ -11,8 +11,10 @@ def parse_temp(temp):
         return None
 
 class Weather(Service):
+    name = 'weather'
+
     def __init__(self):
-        self.url = 'http://m.idokep.hu/'
+        self.__url = 'http://m.idokep.hu/'
 
     def fetch_content(self, tree):
         data = dict(
@@ -74,7 +76,7 @@ class Weather(Service):
         return data
 
     def __call__(self):
-        content = tools.load_url(self.url)
+        content = tools.load_url(self.__url)
         parser = etree.HTMLParser()
         tree = etree.parse(content, parser)
 

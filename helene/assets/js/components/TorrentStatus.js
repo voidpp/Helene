@@ -28,7 +28,7 @@ export class TorrentStatus extends React.Component {
 
     render() {
         return div({className: 'torrent_status'},
-            div('Szabad terület: ' + numeral(this.state.free_space).format('0.0 b') + ', Aktív: ' +
+            div('Szabad: ' + numeral(this.state.free_space).format('0.0 b') + ', Aktív: ' +
                 moment.duration(this.state.active_time, 'seconds').humanize()),
             Traffic(this.state)
         );
