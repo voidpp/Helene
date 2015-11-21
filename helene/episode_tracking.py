@@ -1,9 +1,12 @@
 import tools
 import json
+import logging
 
 from datetime import datetime, timedelta
 from service import Service
 from copy import copy
+
+logger = logging.getLogger(__name__)
 
 class EpisodeTracking(Service):
     def __init__(self, config):
@@ -13,12 +16,18 @@ class EpisodeTracking(Service):
     def get_categs(self):
         # TODO: python tvs API wrapper...
         url = 'https://tvstore.me/api/%s/episode/tracking?action=getgroups' % self.config['tvstore_api_key']
+        logger.debug('Fetch tracking groups: %s from %s' % (', '.join([str(x) for x in self.config['group_id_list']]), url))
         content = json.load(tools.load_url(url))
-        return content['743']['categs']
+        categs = []
+        for grp_id in content:
+            if int(grp_id) in self.config['group_id_list']:
+                categs += content[grp_id]['categs']
+        return categs
 
     def get_categ_data(self, categs):
         cats = ','.join([str(x) for x in categs])
         url = 'https://tvstore.me/api/%s/episode/tracking?action=getalldata&c=%s' % (self.config['tvstore_api_key'], cats)
+        logger.debug('Fetch categories: %s' % url)
         return json.load(tools.load_url(url))
 
     def get_episodes_status(self, all_episodes, data):
@@ -70,6 +79,7 @@ class EpisodeTracking(Service):
             )
 
         url = '%s/airdates' % self.config['air_imdb_server']
+        logger.debug("Fetch airdate from imdb: %s from url %s" % (', '.join([str(x) for x in data.keys()]), url))
         return json.load(tools.load_url(url, json.dumps(data)))
 
     def __call__(self):

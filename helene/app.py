@@ -1,6 +1,8 @@
 import json
 from flask import Flask, render_template
 from functools import partial
+import logging
+import logging.config
 
 app = Flask('helene')
 
@@ -13,6 +15,9 @@ from helene.episode_tracking import EpisodeTracking
 from helene.config import config
 
 from helene.tools import AlchemyEncoder
+
+if 'logger' in config:
+    logging.config.dictConfig(config['logger'])
 
 services = [
     dict(
