@@ -43,6 +43,10 @@ class EpisodeTracking(Service):
                 ep_data = all_episodes[str(season)][str(episode)]
                 ep_data['episode'] = episode
                 ep_data['season'] = season
+                if 'en' not in ep_data:
+                    logger.warning("Tracking data not found in episode data in %s - %sx%s" % (data['eng_name'], season, episode))
+                    ep_data['en'] = 0
+                    ep_data['hu'] = 0
                 if ep_data['en'] == 1 or ep_data['hu'] == 1:
                     progress_cnt += 100
                 if 'air_en' not in ep_data or ep_data['air_en'][0] == '0':
