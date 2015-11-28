@@ -91,7 +91,10 @@ class EpisodeTracking(Service):
         for id in categ_data:
             data = categ_data[id]
             data.update(self.get_episodes_status(data['episodes'], data))
-            data['lastseen'] = [int(x) for x in data['lastseen'].split('x')]
+            if data['lastseen'] == 0:
+                data['lastseen'] = [0, 0]
+            else:
+                data['lastseen'] = [int(x) for x in data['lastseen'].split('x')]
             data['curr']['subtitles'] = self.check_subtitles(data)
 
         remote_airs = []

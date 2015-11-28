@@ -19,6 +19,8 @@ from helene.tools import AlchemyEncoder
 if 'logger' in config:
     logging.config.dictConfig(config['logger'])
 
+logger = logging.getLogger(__name__)
+
 services = [
     dict(
         url = 'weather',
@@ -48,7 +50,12 @@ def index(layout = 'desktop'):
     return render_template('index.html', layout = layout, config = config)
 
 def handle_service_request(service):
-    response = service['handler']()
+    try:
+        response = service['handler']()
+    except Exception as e:
+        logger.exception("Unhandled exception")
+        raise
+
     return json.dumps(response, cls = AlchemyEncoder)
 
 for service in services:
