@@ -559,11 +559,14 @@ body, html {
   .episode_tracking .next {
     transform: scale(1.1, 0.9);
     padding-right: 4px; }
-  .episode_tracking .status span.glyphicon {
+  .episode_tracking .status span {
+    width: 20px;
+    display: inline-block;
+    text-align: center;
     padding: 0 3px; }
-    .episode_tracking .status span.glyphicon.inactive {
+    .episode_tracking .status span.inactive {
       opacity: 0.3; }
-    .episode_tracking .status span.glyphicon.active {
+    .episode_tracking .status span.active {
       color: #00BB00; }
   .episode_tracking .info {
     padding: 0 5px; }

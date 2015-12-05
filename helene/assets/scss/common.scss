@@ -382,7 +382,10 @@ body, html {
         padding-right: 4px;
     }
     .status {
-        span.glyphicon {
+        span {
+            width: 20px;
+            display: inline-block;
+            text-align: center;
             padding: 0 3px;
             &.inactive {
                 opacity: 0.3;

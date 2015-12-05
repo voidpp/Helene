@@ -17,15 +17,11 @@ export class EpisodeTrackingStore extends BaseStore {
         this.__lang = 'en'; // TODO
     }
 
-    dispatchCallback(action) {
-        if (action.type !== DataActionTypes.EPISODE_TRACKING_FETCHED)
-            return;
-
+    _preprocess_data(data) {
         let shows = [];
-        let now = new Date().getTime();
 
-        for (let id in action.data) {
-            let show_data = action.data[id];
+        for (let id in data) {
+            let show_data = data[id];
             if (show_data.next == null) {
                 console.log('No next info for ' + show_data.eng_name + ', id:', show_data.id);
                 continue;
@@ -33,21 +29,28 @@ export class EpisodeTrackingStore extends BaseStore {
             show_data.next.air_en = new Date(show_data.next.air_en);
             show_data.prev.air_en = new Date(show_data.prev.air_en);
             show_data.curr.air_en = new Date(show_data.curr.air_en);
+            show_data.progress = show_data.watched_cnt / show_data.available_cnt * 100;
             shows.push(show_data);
         }
 
+        return shows;
+    }
+
+    _sort_data(data) {
+        let now = new Date().getTime();
+
         function watch_info(sd) {
-            if (sd.next.air_en.getTime() - now > 1000*60*60*24*30)
-                return 1;
             if ((sd.curr.en == epStatus.DOWNLOADABLE || sd.curr.en == epStatus.DOWNLOADED) && sd.prev.en == epStatus.WATCHED)
                 return 4;
+            if (sd.next.air_en.getTime() - now > 1000*60*60*24*30)
+                return 1;
             if (sd.curr.en == epStatus.WATCHED && sd.prev.en == epStatus.WATCHED) {
                 return 3;
             }
             return 2;
         }
 
-        shows.sort((a, b) => {
+        data.sort((a, b) => {
             let wia = watch_info(a);
             let wib = watch_info(b);
             if (wia !== wib)
@@ -56,6 +59,14 @@ export class EpisodeTrackingStore extends BaseStore {
                 return b.progress - a.progress;
             return a.next.air_en.getTime() - b.next.air_en.getTime();
         });
+    }
+
+    dispatchCallback(action) {
+        if (action.type !== DataActionTypes.EPISODE_TRACKING_FETCHED)
+            return;
+
+        let shows = this._preprocess_data(action.data);
+        this._sort_data(shows);
 
         this.data = shows;
         this.emitChange();

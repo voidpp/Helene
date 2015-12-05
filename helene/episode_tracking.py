@@ -36,12 +36,18 @@ class EpisodeTracking(Service):
         now = datetime.now()
         curr = None
         prev = None
-        progress_cnt = 0
-        progress_all = 0
+        watched_cnt = 0
+        available_cnt = 0
+        result = None
+        def generate_result(next):
+            return dict(prev = prev,
+                        curr = curr,
+                        next = next,
+                        watched_cnt = watched_cnt,
+                        available_cnt = available_cnt)
+
         for season in sorted([int(x) for x in all_episodes.keys()]):
-            ep_int_list = sorted([int(x) for x in all_episodes[str(season)].keys()])
-            progress_all += len(ep_int_list)
-            for episode in ep_int_list:
+            for episode in sorted([int(x) for x in all_episodes[str(season)].keys()]):
                 ep_data = all_episodes[str(season)][str(episode)]
                 ep_data['episode'] = episode
                 ep_data['season'] = season
@@ -50,17 +56,23 @@ class EpisodeTracking(Service):
                     ep_data['en'] = 0
                     ep_data['hu'] = 0
                 if ep_data['en'] == 1 or ep_data['hu'] == 1:
-                    progress_cnt += 100
+                    watched_cnt += 1
+                if ep_data['en'] > 0 or ep_data['hu'] > 0:
+                    available_cnt += 1
                 if 'air_en' not in ep_data or ep_data['air_en'][0] == '0':
                     continue
                 date = datetime.strptime(ep_data['air_en'], "%Y-%m-%d %H:%M:%S") + timedelta(days = 1)
                 ep_data['air_en'] = date.strftime('%Y-%m-%d')
-                if date > now:
-                    return dict(prev = prev, curr = curr, next = ep_data, progress = progress_cnt / progress_all)
+                # generate result, but need to continue the iteration due counting available episodes
+                if date > now and result is None:
+                    result = generate_result(ep_data)
                 prev = curr
                 curr = ep_data
 
-        return dict(prev = prev, curr = curr, next = None, progress = progress_cnt / progress_all)
+        if result is None:
+            result = generate_result(None)
+
+        return result
 
     def check_subtitles(self, categ, cache):
         title = self.html_parser.unescape(categ['eng_name'])
