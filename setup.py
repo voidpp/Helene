@@ -13,6 +13,7 @@ setup(
         "SQLAlchemy==1.0.8",
         "MySQL-python==1.2.5",
         "phpserialize==1.3",
+        "voidpp-tools==1.2.0",
     ],
     include_package_data = True,
     packages = find_packages(),

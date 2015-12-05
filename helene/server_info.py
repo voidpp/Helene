@@ -1,8 +1,8 @@
-import tools
 import subprocess
 import re
 import json
 from service import Service
+from voidpp_tools.http import HTTP
 
 class ServerInfo(Service):
     name = 'servers'
@@ -32,7 +32,7 @@ class ServerInfo(Service):
             server['ping'] = ping
             if ping is not None:
                 try:
-                    server['details'] = json.load(tools.load_url(server['details_url']))
+                    server['details'] = HTTP.load_json(server['details_url'])
                 except Exception as e:
                     server['details'] = None
             data.append(server)

@@ -1,7 +1,6 @@
 
 from lxml import etree
-
-import tools
+from voidpp_tools.http import HTTP
 from service import Service
 
 def parse_temp(temp):
@@ -76,7 +75,7 @@ class Weather(Service):
         return data
 
     def __call__(self):
-        content = tools.load_url(self.__url)
+        content = HTTP.load_url(self.__url)
         parser = etree.HTMLParser()
         tree = etree.parse(content, parser)
 

@@ -1,6 +1,7 @@
-import tools
 import json
 import logging
+import HTMLParser
+from voidpp_tools.http import HTTP
 
 from datetime import datetime, timedelta
 from service import Service
@@ -12,12 +13,13 @@ class EpisodeTracking(Service):
     def __init__(self, config):
         self.config = config
         self.remove_fields = ['episodes', 'epnums', 'imdb_link', 'porthu_link', 'tvrage_link', 'loaded', 'ended', 'group', 'tvcom_link']
+        self.html_parser = HTMLParser.HTMLParser()
 
     def get_categs(self):
         # TODO: python tvs API wrapper...
         url = 'https://tvstore.me/api/%s/episode/tracking?action=getgroups' % self.config['tvstore_api_key']
         logger.debug('Fetch tracking groups: %s from %s' % (', '.join([str(x) for x in self.config['group_id_list']]), url))
-        content = json.load(tools.load_url(url))
+        content = HTTP.load_json(url)
         categs = []
         for grp_id in content:
             if int(grp_id) in self.config['group_id_list']:
@@ -28,7 +30,7 @@ class EpisodeTracking(Service):
         cats = ','.join([str(x) for x in categs])
         url = 'https://tvstore.me/api/%s/episode/tracking?action=getalldata&c=%s' % (self.config['tvstore_api_key'], cats)
         logger.debug('Fetch categories: %s' % url)
-        return json.load(tools.load_url(url))
+        return HTTP.load_json(url)
 
     def get_episodes_status(self, all_episodes, data):
         now = datetime.now()
@@ -60,18 +62,15 @@ class EpisodeTracking(Service):
 
         return dict(prev = prev, curr = curr, next = None, progress = progress_cnt / progress_all)
 
-    def check_subtitles(self, categ):
-        subtitle_status_data = {}
-        with open('/mnt/manfred/.autosubs.cache.json') as f:
-            subtitle_status_data = json.load(f)
-        title = categ['eng_name']
+    def check_subtitles(self, categ, cache):
+        title = self.html_parser.unescape(categ['eng_name'])
         season = str(categ['curr']['season']) # only strings can be key in JSON
         episode = categ['curr']['episode']
-        if title not in subtitle_status_data:
+        if title not in cache:
             return False
-        if season not in subtitle_status_data[title]:
+        if season not in cache[title]:
             return False
-        return episode in subtitle_status_data[title][season]
+        return episode in cache[title][season]
 
     def get_imdb_airs(self, categs):
         data = dict()
@@ -84,9 +83,17 @@ class EpisodeTracking(Service):
 
         url = '%s/airdates' % self.config['air_imdb_server']
         logger.debug("Fetch airdate from imdb: %s from url %s" % (', '.join([str(x) for x in data.keys()]), url))
-        return json.load(tools.load_url(url, json.dumps(data)))
+        return HTTP.load_json(url, json.dumps(data))
+
+    def load_subtitle_cache(self):
+        subtitle_status_data = {}
+        with open('/mnt/manfred/.autosubs.cache.json') as f:
+            subtitle_status_data = json.load(f)
+        logger.debug("Subtitle cache loaded. Tvshows: %s" % subtitle_status_data.keys())
+        return subtitle_status_data
 
     def __call__(self):
+        sub_cache = self.load_subtitle_cache()
         categ_data = self.get_categ_data(self.get_categs())
         for id in categ_data:
             data = categ_data[id]
@@ -95,7 +102,7 @@ class EpisodeTracking(Service):
                 data['lastseen'] = [0, 0]
             else:
                 data['lastseen'] = [int(x) for x in data['lastseen'].split('x')]
-            data['curr']['subtitles'] = self.check_subtitles(data)
+            data['curr']['subtitles'] = self.check_subtitles(data, sub_cache)
 
         remote_airs = []
         for id in categ_data:

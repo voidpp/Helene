@@ -14,7 +14,7 @@ from helene.episode_tracking import EpisodeTracking
 
 from helene.config import config
 
-from helene.tools import AlchemyEncoder
+from voidpp_tools.alchemy_encoder import AlchemyEncoder
 
 if 'logger' in config:
     logging.config.dictConfig(config['logger'])
