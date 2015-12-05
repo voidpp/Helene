@@ -36,10 +36,11 @@ export class EpisodeTracking extends React.Component {
                 td({className: 'thumb', rowSpan: 2}, img({src: 'https://tvstore.me/pic/categs/' + show.pic})),
                 td({className: 'ep'}, show.curr.season + 'x' + pad(show.curr.episode)),
                 td({className: 'status'}, this._getStatus(show.curr, show))
-            ), tr(
-                td({className: 'ep'}, show.next.season + 'x' + pad(show.next.episode)),
-                td({className: 'airtime'}, moment.duration(show.next.air_en.getTime() - now).humanize())
-            ));
+            ), show.next.real ? tr(
+                    td({className: 'ep'}, show.next.season + 'x' + pad(show.next.episode)),
+                    td({className: 'airtime'}, moment.duration(show.next.air_en.getTime() - now).humanize()))
+                : tr(td({colSpan: 2, className: 'no_next_info'}, 'no next info'))
+            );
         }
         return table(tbody(...rows));
     }

@@ -377,6 +377,10 @@ body, html {
     .ep, .airtime, .status {
         padding: 0 3px;
     }
+    .no_next_info {
+        text-align: center;
+        opacity: 0.3;
+    }
     .next {
         transform: scale(1.1, 0.9);
         padding-right: 4px;

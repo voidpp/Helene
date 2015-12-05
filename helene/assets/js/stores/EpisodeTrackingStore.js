@@ -24,7 +24,17 @@ export class EpisodeTrackingStore extends BaseStore {
             let show_data = data[id];
             if (show_data.next == null) {
                 console.log('No next info for ' + show_data.eng_name + ', id:', show_data.id);
-                continue;
+                show_data.next = {
+                    air_en: '2099-01-01',
+                    air_hu: '2099-01-01',
+                    en: 0,
+                    hu: 0,
+                    season: 0,
+                    episode: 0,
+                    real: false,
+                }
+            } else {
+                show_data.next.real = true;
             }
             show_data.next.air_en = new Date(show_data.next.air_en);
             show_data.prev.air_en = new Date(show_data.prev.air_en);

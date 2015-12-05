@@ -556,6 +556,9 @@ body, html {
     white-space: nowrap; }
   .episode_tracking .ep, .episode_tracking .airtime, .episode_tracking .status {
     padding: 0 3px; }
+  .episode_tracking .no_next_info {
+    text-align: center;
+    opacity: 0.3; }
   .episode_tracking .next {
     transform: scale(1.1, 0.9);
     padding-right: 4px; }
