@@ -36,6 +36,18 @@ export class EpisodeTrackingStore extends BaseStore {
             } else {
                 show_data.next.real = true;
             }
+            if (show_data.prev == null) {
+                console.log('No prev info for ' + show_data.eng_name + ', id:', show_data.id);
+                show_data.prev = {
+                    air_en: '2000-01-01',
+                    air_hu: '2000-01-01',
+                    en: 0,
+                    hu: 0,
+                    season: 0,
+                    episode: 0,
+                    real: false,
+                }
+            }
             show_data.next.air_en = new Date(show_data.next.air_en);
             show_data.prev.air_en = new Date(show_data.prev.air_en);
             show_data.curr.air_en = new Date(show_data.curr.air_en);
