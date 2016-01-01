@@ -12,7 +12,7 @@ class Temperature(Service):
 
     def __init__(self, config):
         self.config = config
-        self.engine = sqlalchemy.create_engine('mysql://%(user)s:%(pass)s@%(host)s/%(name)s' % config, encoding = 'latin1')
+        self.engine = sqlalchemy.create_engine(config['url'], encoding = 'latin1')
 
     @contextmanager
     def get_session(self):

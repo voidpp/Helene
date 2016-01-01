@@ -85,6 +85,8 @@ class EpisodeTracking(Service):
         return episode in cache[title][season]
 
     def get_imdb_airs(self, categs):
+        if self.config['air_imdb_server'] is None:
+            return {}
         data = dict()
         for categ in categs:
             data[categ['id']] = dict(
@@ -99,7 +101,9 @@ class EpisodeTracking(Service):
 
     def load_subtitle_cache(self):
         subtitle_status_data = {}
-        with open('/mnt/manfred/.autosubs.cache.json') as f:
+        if self.config['autosubs_cache_file'] is None:
+            return subtitle_status_data
+        with self.config['autosubs_cache_file'] as f:
             subtitle_status_data = json.load(f)
         logger.debug("Subtitle cache loaded. Tvshows: %s" % subtitle_status_data.keys())
         return subtitle_status_data

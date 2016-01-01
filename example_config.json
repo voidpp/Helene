@@ -1,0 +1,65 @@
+{
+    "torrent": {
+        "host": "transmisson_host",
+        "port": 9091
+    },
+    "traffic_server": "http://192.168.1.1:35281",
+    "temperature_database": {
+        "url": "mysql://user:pass@host:port/dbname"
+    },
+    "plutonium": {
+        "host": "host",
+        "port": 18042
+    },
+    "episode_tracking": {
+        "tvstore_api_key": "key",
+        "air_imdb_server": "http://host/air-imdb",
+        "group_id_list": [42],
+        "autosubs_cache_file": "/path/to/.autosubs.cache.json"
+    },
+    "servers": [
+        {
+            "ip": "42.42.42.42",
+            "name": "some name",
+            "details_url": "http://42.42.42.42:35280",
+            "location": "hu"
+        }
+    ],
+    "logger": {
+        "disable_existing_loggers": false,
+        "formatters": {
+            "standard": {
+                "format": "%(asctime)s - %(levelname)s - %(name)s - %(filename)s:%(lineno)d: %(message)s"
+            }
+        },
+        "handlers": {
+            "file": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "formatter": "standard",
+                "level": "DEBUG",
+                "filename": "/tmp/helene.log",
+                "maxBytes": 10485760,
+                "backupCount": 20,
+                "encoding": "utf8"
+            }
+        },
+        "loggers": {
+            "helene": {
+                "handlers": [
+                    "file"
+                ],
+                "level": "DEBUG",
+                "propagate": true
+            },
+            "voidpp_tools": {
+                "handlers": [
+                    "file"
+                ],
+                "level": "DEBUG",
+                "propagate": true
+            }
+
+        },
+        "version": 1
+    }
+}
