@@ -103,7 +103,7 @@ class EpisodeTracking(Service):
         subtitle_status_data = {}
         if self.config['autosubs_cache_file'] is None:
             return subtitle_status_data
-        with self.config['autosubs_cache_file'] as f:
+        with open(self.config['autosubs_cache_file']) as f:
             subtitle_status_data = json.load(f)
         logger.debug("Subtitle cache loaded. Tvshows: %s" % subtitle_status_data.keys())
         return subtitle_status_data
