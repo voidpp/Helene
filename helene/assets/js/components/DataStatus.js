@@ -5,6 +5,7 @@ import numeral from 'numeral';
 
 import {ComponentAsFactory, bind} from '../tools'
 import DataRequestStore from '../stores/DataRequestStore';
+import Lang from '../lang';
 
 class DataStatus extends React.Component {
     constructor(props) {
@@ -43,8 +44,8 @@ class DataStatus extends React.Component {
             table(
                 thead(tr(
                     th(),
-                    th('Utolsó'),
-                    th('Következő')
+                    th(Lang.t('Last')),
+                    th(Lang.t('Next'))
                 )),
                 tbody(...rows)
             )

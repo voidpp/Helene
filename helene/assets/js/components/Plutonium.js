@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import {ComponentAsFactory, bind} from '../tools'
 import PlutoniumStore from '../stores/PlutoniumStore';
+import Lang from '../lang';
 
 class Plutonium extends React.Component {
     constructor(props) {
@@ -40,9 +41,9 @@ class Plutonium extends React.Component {
         }
         return table({className: 'plutonium'},
             thead(tr(
-                th('Név'),
-                th('Utolsó'),
-                th('Következő')
+                th(Lang.t('Name')),
+                th(Lang.t('Last')),
+                th(Lang.t('Next'))
             )),
             tbody(...rows)
         );

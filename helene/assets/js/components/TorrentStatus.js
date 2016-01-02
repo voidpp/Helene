@@ -6,6 +6,7 @@ import numeral from 'numeral';
 import {ComponentAsFactory, bind} from '../tools';
 import TorrentStore from '../stores/TorrentStore';
 import Traffic from './Traffic';
+import Lang from '../lang';
 
 export class TorrentStatus extends React.Component {
 	constructor(props) {
@@ -28,8 +29,8 @@ export class TorrentStatus extends React.Component {
 
     render() {
         return div({className: 'torrent_status'},
-            div('Szabad: ' + numeral(this.state.free_space).format('0.0 b') + ', Aktív: ' +
-                moment.duration(this.state.active_time, 'seconds').humanize()),
+            div(Lang.t('Free') + ': ' + numeral(this.state.free_space).format('0.0 b') + ', '
+                + Lang.t('Active') + ': ' + moment.duration(this.state.active_time, 'seconds').humanize()),
             Traffic(this.state)
         );
     }

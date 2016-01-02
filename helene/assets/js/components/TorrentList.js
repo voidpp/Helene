@@ -5,6 +5,7 @@ import numeral from 'numeral';
 
 import {ComponentAsFactory, bind} from '../tools';
 import TorrentStore from '../stores/TorrentStore';
+import Lang from '../lang';
 
 export class TorrentList extends React.Component {
 	constructor(props) {
@@ -42,7 +43,7 @@ export class TorrentList extends React.Component {
                 td({className: 'eta'}, torrent.eta ? moment.duration(torrent.eta, 'seconds').humanize() : '')
             ));
         }
-        return rows.length ? table({className: 'torrent_list'}, tbody(...rows)) : div({className: 'empty'}, 'Nincs aktív letöltés');
+        return rows.length ? table({className: 'torrent_list'}, tbody(...rows)) : div({className: 'empty'}, Lang.t('No active download'));
     }
 }
 

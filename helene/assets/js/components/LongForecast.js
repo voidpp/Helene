@@ -5,16 +5,7 @@ import equal from 'deep-equal';
 
 import {ComponentAsFactory, bind} from '../tools';
 import WeatherStore from '../stores/WeatherStore';
-
-const weekDaysShortings = {
-	'Vasárnap': 'Vas',
-	'Hétfő': 'Hét',
-	'Kedd': 'Kedd',
-	'Szerda': 'Sze',
-	'Csütörtök': 'Csüt',
-	'Péntek': 'Pén',
-	'Szombat': 'Szo'
-};
+import Lang from '../lang';
 
 export class LongForecast extends React.Component {
 	constructor(props) {
@@ -51,7 +42,7 @@ export class LongForecast extends React.Component {
 
         for (let day of this.state.forecast) {
             raw_rows[0].push(td({className: 'day_num'}, day.day.num));
-            raw_rows[1].push(td({className: 'day_text'}, weekDaysShortings[day.day.text]));
+            raw_rows[1].push(td({className: 'day_text'}, Lang.t(day.day.text)));
             raw_rows[2].push(td({className: 'image'}, img({src: day.icon})));
             temps.max.push(day.temp.max);
             temps.min.push(day.temp.min);

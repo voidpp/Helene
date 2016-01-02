@@ -1,0 +1,22 @@
+{
+	"Vasárnap": "Sun",
+	"Hétfő": "Mon",
+	"Kedd": "Tue",
+	"Szerda": "Wed",
+	"Csütörtök": "Thu",
+	"Péntek": "Fri",
+	"Szombat": "Sat",
+    "Now": "Now",
+    "Name": "Name",
+    "Last": "Last",
+    "Next": "Next",
+    "Free": "Free",
+    "Active": "Active",
+    "No active download": "No active download",
+    "ma": "today",
+    "holnap": "tomorrow",
+    "reggel": "morning",
+    "délelőtt": "forenoon",
+    "délután": "afternoon",
+    "este": "evening"
+}

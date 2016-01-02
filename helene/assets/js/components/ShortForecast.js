@@ -3,6 +3,7 @@ import React from 'react';
 
 import {ComponentAsFactory, bind} from '../tools';
 import WeatherStore from '../stores/WeatherStore';
+import Lang from '../lang';
 
 export class ShortForecast extends React.Component {
 	constructor(props) {
@@ -25,12 +26,17 @@ export class ShortForecast extends React.Component {
         this.setState({forecast: WeatherStore.data.forecast.slice(0,2)});
     }
 
+    getTimeLang(time) {
+        let parts = time.split(' ');
+        return Lang.t(parts[0]) + ' ' + Lang.t(parts[1]);
+    }
+
     render() {
         let rows = [];
         for (let part of this.state.forecast) {
             rows.push(
                 tr(
-                    td({colSpan: 2, className: 'time'}, part.time)
+                    td({colSpan: 2, className: 'time'}, this.getTimeLang(part.time))
                 ),
                 tr(
                     td({className: 'temp'}, part.temp + '°C'),
