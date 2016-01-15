@@ -12,7 +12,7 @@ from helene.torrent import Torrent
 from helene.temperature import Temperature
 from helene.episode_tracking import EpisodeTracking
 
-from helene.config import config
+from helene.config import config, config_file
 
 from voidpp_tools.alchemy_encoder import AlchemyEncoder
 
@@ -20,6 +20,8 @@ if 'logger' in config:
     logging.config.dictConfig(config['logger'])
 
 logger = logging.getLogger(__name__)
+
+logger.info("Config loaded from '%s'" % config_file)
 
 services = [
     dict(
@@ -50,6 +52,7 @@ def index(layout = 'desktop'):
     return render_template('index.html', layout = layout, config = config)
 
 def handle_service_request(service):
+    logger.debug("Handle service request: '%s'" % service['url'])
     try:
         response = service['handler']()
     except Exception as e:

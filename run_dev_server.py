@@ -1,6 +1,4 @@
 
-import helene
-
 from helene.app import app
 
 app.debug = True
