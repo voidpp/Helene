@@ -40,8 +40,10 @@ class EpisodeTracking(Service):
         available_cnt = 0
         result = None
         def generate_result(next):
+            if curr is None:
+                logger.warning("Tracking data for current ep is None. Data: %s" % data)
             return dict(prev = prev,
-                        curr = curr,
+                        curr = curr if curr else next,
                         next = next,
                         watched_cnt = watched_cnt,
                         available_cnt = available_cnt)
@@ -118,7 +120,8 @@ class EpisodeTracking(Service):
                 data['lastseen'] = [0, 0]
             else:
                 data['lastseen'] = [int(x) for x in data['lastseen'].split('x')]
-            data['curr']['subtitles'] = self.check_subtitles(data, sub_cache)
+            if data['curr'] is not None:
+                data['curr']['subtitles'] = self.check_subtitles(data, sub_cache)
 
         remote_airs = []
         for id in categ_data:
