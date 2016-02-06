@@ -31,6 +31,7 @@
     > * {
         position: absolute;
         top: 50%;
+        transform: translateY(-50%);
         -webkit-transform: translateY(-50%);
     }
 }
@@ -39,6 +40,7 @@
     > * {
         position: absolute;
         left: 50%;
+        transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
     }
 }
@@ -48,6 +50,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
+        transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
     }
 }
@@ -205,33 +208,6 @@ body, html {
         .progress {
             width: 60px;
         }
-    }
-}
-
-.room_temp {
-    @extend .center;
-    table {
-        border-collapse: collapse;
-    }
-    td {
-        padding: 3px 5px;
-        text-align: right;
-    }
-    tr  {
-        .current {
-            border-right: 1px solid white;
-        }
-        & td:first-child {
-            text-align: left;
-            &:first-letter {
-                text-transform: uppercase;
-            }
-        }
-    }
-    th {
-        font-size: 12px;
-        font-weight: normal;
-        border-bottom: 1px solid white;
     }
 }
 
