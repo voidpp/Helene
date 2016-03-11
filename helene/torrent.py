@@ -7,10 +7,12 @@ class Torrent(Service):
 
     def __init__(self, config):
         self.config = config
-        self.client = transmissionrpc.Client(self.config['host'], port = self.config['port'])
+
+    def get_client(self):
+        return transmissionrpc.Client(self.config['host'], port = self.config['port'])
 
     def get_status(self):
-        session = self.client.session_stats()
+        session = self.get_client().session_stats()
         return dict(
             speed = dict(
                 tx = session.uploadSpeed,
@@ -26,7 +28,7 @@ class Torrent(Service):
 
     def get_downloading_torrents(self):
         data = {}
-        for torrent in self.client.get_torrents():
+        for torrent in self.get_client().get_torrents():
             if torrent.percentDone == 1.0:
                 continue
             data[torrent.hashString] = dict(
