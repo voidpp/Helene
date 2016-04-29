@@ -29,8 +29,6 @@ export class TorrentStatus extends React.Component {
 
     render() {
         return div({className: 'torrent_status'},
-            div(Lang.t('Free') + ': ' + numeral(this.state.free_space).format('0.0 b') + ', '
-                + Lang.t('Active') + ': ' + moment.duration(this.state.active_time, 'seconds').humanize()),
             Traffic(this.state)
         );
     }

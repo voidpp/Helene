@@ -12,5 +12,9 @@
     "Next": "Következő",
     "Free": "Szabad",
     "Active": "Aktív",
-    "No active download": "Nincs aktiv letöltés"
+    "No active download": "Nincs aktiv letöltés",
+    "Label": "Cimke",
+    "Device": "Eszköz",
+    "Total": "Összes",
+    "weekDayNames": ["V", "H", "K", "Sz", "Cs", "P", "Sz"]
 }

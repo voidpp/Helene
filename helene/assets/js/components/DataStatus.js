@@ -14,13 +14,10 @@ class DataStatus extends React.Component {
             descriptors: DataRequestStore.descriptors
         };
         bind(this, this.onChangeData);
-        this.active = false;
-        setTimeout(() => { this.active = true; }, 60 * 1000);
     }
 
     onChangeData() {
-        if(this.active)
-            this.setState({descriptors: DataRequestStore.descriptors});
+        this.setState({descriptors: DataRequestStore.descriptors});
     }
 
     componentDidMount() {

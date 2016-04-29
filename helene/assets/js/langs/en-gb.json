@@ -18,5 +18,6 @@
     "reggel": "morning",
     "délelőtt": "forenoon",
     "délután": "afternoon",
-    "este": "evening"
+    "este": "evening",
+    "weekDayNames": ["Su", "Mo", "Tu", "W", "Th", "F", "Sa"]
 }

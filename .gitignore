@@ -58,3 +58,8 @@ target/
 
 .sass-cache
 node_modules
+helene/static/css/desktop.css
+helene/static/css/small_clock.css
+helene/static/js/desktop.js
+helene/static/js/small_clock.js
+helene/helene.json

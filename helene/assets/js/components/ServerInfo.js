@@ -35,7 +35,7 @@ export class ServerInfo extends React.Component {
                 td({className: 'status'}, img({src: `/static/pic/status-${server.state}.png`})),
                 td(server.name),
                 td(img({src: `/static/pic/flags/${server.location}.png`})),
-                td({className: 'ping'}, server.ping ? numeral(server.ping).format('0.00') + ' ms' : null),
+                td({className: 'ping'}, server.ping ? numeral(server.ping).format('0.0') + ' ms' : null),
                 td(isDetails ? numeral(server.details.load[0]).format('0.00') : null),
                 td(isDetails ? numeral(server.details.load[1]).format('0.00') : null),
                 td(isDetails ? numeral(server.details.load[2]).format('0.00') : null),

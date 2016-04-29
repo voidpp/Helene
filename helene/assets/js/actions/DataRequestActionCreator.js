@@ -47,6 +47,7 @@ export class DataRequestActionCreator {
 
     start(...descriptors) {
         for (let desc of descriptors) {
+            console.debug(`Start descriptor url: ${desc.url}`);
             this._startRequest(desc);
             desc.intervalId = setInterval(this._startRequest.bind(this, desc), desc.interval * 1000);
         }

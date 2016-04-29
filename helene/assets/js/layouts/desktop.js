@@ -33,6 +33,7 @@ import Network from '../components/Network';
 import Plutonium from '../components/Plutonium';
 import DataStatus from '../components/DataStatus';
 import EpisodeTracking from '../components/EpisodeTracking';
+import HDDStat from '../components/HDDStat';
 
 import RectLayout from '../RectLayout';
 
@@ -73,11 +74,23 @@ layout.roomTemperature = new RectLayout(
     layout.longForecast.width,
     130
 );
-layout.torrentList = new RectLayout(
+layout.calendar = new RectLayout(
     layout.server.bottom + layout.margin,
     layout.episodeTracking.right + layout.margin,
+    230,
+    250
+);
+layout.hdd = new RectLayout(
+    layout.server.bottom + layout.margin,
+    layout.calendar.right + layout.margin,
+    layout.width - layout.calendar.right - layout.margin * 2,
+    layout.calendar.height
+);
+layout.torrentList = new RectLayout(
+    layout.calendar.bottom + layout.margin,
+    layout.episodeTracking.right + layout.margin,
     layout.width - layout.episodeTracking.right - layout.margin * 2,
-    layout.height - layout.firstLineHeight - layout.server.height - layout.margin * 4
+    layout.height - layout.calendar.bottom - layout.margin * 2
 );
 layout.data_status = new RectLayout(
     layout.roomTemperature.bottom + layout.margin,
@@ -102,7 +115,9 @@ let body = div({className: 'body', style: {width: layout.width, height: layout.h
     div({className: 'panel', style: layout.data_status.style}, DataStatus()),
     div({className: 'panel transmission', style: layout.torrentList.style}, Plutonium(), TorrentStatus(), TorrentList()),
     div({className: 'panel episode_tracking', style: layout.episodeTracking.style}, EpisodeTracking()),
-    div({className: 'panel network', style: layout.network.style}, Network())
+    div({className: 'panel network', style: layout.network.style}, Network()),
+    div({className: 'panel', style: layout.calendar.style}, Calendar()),
+    div({className: 'panel', style: layout.hdd.style}, HDDStat({caption: config.hdd_stat.caption}))
 )
 
 console.debug('Config:', config);
@@ -121,5 +136,6 @@ DataRequestActionCreator.start(
     new ServiceDescriptor(DataActionTypes.EPISODE_TRACKING_FETCHED, 'episode_tracking', m * 60 * 10, 'Követő'),
     new DataRequestDescriptor(DataActionTypes.TRAFFIC_TODAY_FETCHED, config.traffic_server + '/today', m * 60*60, 'Hálózat napi adat'),
     new DataRequestDescriptor(DataActionTypes.TRAFFIC_SPEED_FETCHED, config.traffic_server + '/speed', m * 10, 'Hálózati forgalom'),
+    new DataRequestDescriptor(DataActionTypes.HDD_STAT_FETCHED, config.hdd_stat.server, m * 30 * 60, 'NAS háttértárai'),
     new DataRequestDescriptor(DataActionTypes.PLUTONIUM_FEEDS_FETCHED, plutonium_url, m * 60, 'Plutonium')
 );

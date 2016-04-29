@@ -7,6 +7,7 @@ import {ComponentAsFactory, bind} from '../tools';
 import DayStore from '../stores/DayStore';
 
 import specialDays from '../special_days.json';
+import Lang from '../lang';
 
 export class Calendar extends React.Component {
 	constructor(props) {
@@ -66,7 +67,7 @@ export class Calendar extends React.Component {
                     props.className += ' cal_' + this._getDayType(props.date);
                     return props;
                 },
-                weekDayNames: ['V', 'H', 'K', 'Sz', 'Cs', 'P', 'Sz'],
+                weekDayNames: Lang.t("weekDayNames"),
             })
         );
     }

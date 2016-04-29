@@ -233,9 +233,6 @@ body, html {
 .torrent_status {
     text-align: right;
     @extend .traffic_stat;
-    .traffic {
-        padding-top: 10px;
-    }
 }
 
 .torrent_list {
@@ -267,8 +264,7 @@ body, html {
         background-image: url('/static/pic/download32.png');
         background-position: center center;
         background-repeat: no-repeat;
-        min-width: 42px;
-    }
+        min-width: 42px;    }
 }
 
 .calendar {
@@ -314,7 +310,7 @@ body, html {
 .data_status {
     @extend .center;
     table {
-        font-size: 13px;
+        font-size: 12px;
         border-collapse: collapse;
     }
     th {
@@ -377,5 +373,46 @@ body, html {
     }
     .info {
         padding: 0 5px;
+    }
+}
+
+td {
+    white-space: nowrap;
+}
+
+.hdd_stat {
+    width: 100%;
+    thead {
+        th {
+            font-size: 14px;
+            padding: 3px;
+        }
+    }
+    tbody {
+        tr:nth-child(4n-3), tr:nth-child(4n-2) {
+            td {
+                background-color: rgba(255,255,255,0.1);
+            }
+        }
+        .free, .total {
+            text-align: right;
+        }
+        .percent {
+            height: 14px;
+        }
+        .percent, .progress {
+            width: 100%;
+        }
+        .device {
+            font-size: 12px;
+        }
+        .used {
+            font-size: 10px;
+            text-align: right;
+        }
+        td {
+            font-size: 15px;
+            padding: 2px 5px;
+        }
     }
 }
