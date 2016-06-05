@@ -11,6 +11,7 @@ from helene.server_info import ServerInfo
 from helene.torrent import Torrent
 from helene.temperature import Temperature
 from helene.episode_tracking import EpisodeTracking
+from helene.dhcp import DHCP
 
 from helene.config import config, config_file
 
@@ -44,6 +45,10 @@ services = [
         url = 'episode_tracking',
         handler = EpisodeTracking(config['episode_tracking']),
     ),
+    dict(
+        url = 'dhcp',
+        handler = DHCP(config['dhcp']),
+    )
 ]
 
 @app.route('/')

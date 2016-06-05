@@ -57,12 +57,17 @@ export class Calendar extends React.Component {
     }
 
     render() {
+        console.log(this.state);
         return div({className: 'calendar'},
             div({className: 'title'}, moment().format('MMMM')),
             React.createElement(CalendarWidget, {
                 weekStartDay: 1,
                 hideFooter: true,
                 hideHeader: true,
+                onChange: (val) => {
+                    this.setState({date: val});
+                },
+                date: this.state.date,
                 onRenderDay: (props) => {
                     props.className += ' cal_' + this._getDayType(props.date);
                     return props;

@@ -11,8 +11,8 @@ export class DayStore extends BaseStore {
         setInterval(this._updateData.bind(this), 1000);
     }
 
-    _updateData() {
-        let today = this._getToday();
+    _updateData(data = this._getToday()) {
+        let today = data;
         if (equal(today, this.today))
             return;
         this.today = today;
@@ -21,11 +21,7 @@ export class DayStore extends BaseStore {
 
     _getToday() {
         let now = new Date();
-        return {
-            years: now.getFullYear(),
-            months: now.getMonth(),
-            date: now.getDate(),
-        }
+        return {date: `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`};
     }
 
     dispatchCallback(action) {
