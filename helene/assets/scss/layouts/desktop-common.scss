@@ -1,0 +1,175 @@
+
+@import '../common';
+
+.body {
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.panel {
+    position: absolute;
+    text-align: center;
+}
+
+.torrent_list {
+    font-size: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.torrent_status {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.short_forecast {
+    width: 100%;
+    height: 100%;
+}
+
+.empty {
+    display: inline-block;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+.transmission {
+    @include bgimage('/static/pic/transmission-logo.png', 0.1);
+}
+
+.server {
+    @include bgimage('/static/pic/server128.png', 0.1);
+}
+
+.network {
+    @include bgimage('/static/pic/network.png', 0.1);
+    @extend .center;
+    .router {
+        width: 300px;
+    }
+}
+
+.server_info {
+    @extend .center;
+}
+
+.plutonium {
+    @include bgimage('/static/pic/rss32.png', 0.5);
+    &:before {
+        background-position: left top;
+    }
+    border-collapse: initial;
+    padding-left: 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 5px;
+    th {
+        font-size: 12px;
+        text-align: left;
+    }
+    td, th {
+        padding: 3px 5px;
+    }
+}
+
+.date-picker {
+    .dp-table {
+        display: table;
+        border-collapse: collapse;
+        border-spacing: 0;
+        .dp-row {
+            display: table-row;
+            .dp-cell {
+                display: table-cell;
+                padding: 0;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+.room_temp {
+    @extend .center;
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    td {
+        padding: 3px 3px;
+        text-align: right;
+    }
+    tr  {
+        .current {
+            border-right: 1px solid white;
+        }
+        & td:first-child {
+            text-align: left;
+            &:first-letter {
+                text-transform: uppercase;
+            }
+        }
+    }
+    th {
+        font-size: 12px;
+        font-weight: normal;
+        border-bottom: 1px solid white;
+    }
+}
+
+.launches_panel {
+    @include bgimage('/static/pic/rocket.png', 0.1);
+}
+
+.launches {
+    height: 100%;
+    font-size: 13px;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    .video {
+        vertical-align: bottom;
+        margin-left: 5px;
+        height: 16px;
+        &.off {
+            opacity: 0.1;
+        }
+    }
+    .location {
+        font-size: 13px;
+        width: 100%;
+        td {
+            padding: 2px 4px;
+        }
+        .iso {
+            font-style: italic;
+            font-size: 18px;
+            padding-right: 10px;
+        }
+        .indaytime {
+            width: 100%;
+        }
+        .countdown {
+            float: right;
+        }
+    }
+    .rocket {
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .title {
+        text-align: center;
+        padding: 5px;
+        font-size: 15px;
+    }
+    .row {
+        padding: 5px;
+        &:nth-child(even){
+            background-color: rgba(255,255,255,0.1);
+        }
+    }
+}

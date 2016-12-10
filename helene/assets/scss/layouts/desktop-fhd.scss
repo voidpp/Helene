@@ -1,11 +1,10 @@
 
 @import '../common';
 
-$bg_image: '/static/pic/polygon_green-wallpaper-1280x1024.jpg';
+$bg_image: '/static/pic/polygon_green-wallpaper-1920x1080.jpg';
 
 @import 'desktop-common';
 
 .body {
     background-image: url($bg_image);
 }
-

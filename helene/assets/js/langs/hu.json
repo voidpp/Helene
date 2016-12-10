@@ -16,5 +16,6 @@
     "Label": "Cimke",
     "Device": "Eszköz",
     "Total": "Összes",
-    "weekDayNames": ["V", "H", "K", "Sz", "Cs", "P", "Sz"]
+    "weekDayNames": ["V", "H", "K", "Sz", "Cs", "P", "Sz"],
+    "Upcoming Launches": "Közelgő kilövések"
 }

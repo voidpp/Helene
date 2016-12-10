@@ -25,7 +25,7 @@ class CurrentDate extends React.Component {
     }
 
     render() {
-        return div({className: 'date'}, moment(this.state).format("YYYY. MMMM D. dddd"));
+        return div({className: 'date'}, moment(this.state.date).format("YYYY. MMMM D. dddd"));
     }
 }
 

@@ -22,15 +22,15 @@ class Weather(Service):
             forecast_long = [],
         )
 
-        current_attribs = tree.xpath('/html/body/div/div[3]/table/tr/td[2]/svg/image')[0].attrib
+        current_attribs = tree.xpath('/html/body/div/div[1]/table/tr/td[2]/svg/image')[0].attrib
 
         data['current'] = dict(
             icon = current_attribs['src'],
             svg = current_attribs['xlink:href'],
-            temp = parse_temp(tree.xpath('/html/body/div/div[3]/table/tr/td[2]/strong')[0].text),
+            temp = parse_temp(tree.xpath('/html/body/div/div[1]/table/tr/td[2]/strong')[0].text),
         )
 
-        for item in tree.xpath('/html/body/div/div[4]/table/tr/td'):
+        for item in tree.xpath('/html/body/div/div[2]/table/tr/td'):
             data['forecast'].append(dict(
                 time = item[0].text,
                 temp = parse_temp(item[2].text),
@@ -43,7 +43,7 @@ class Weather(Service):
             max = -100,
         )
 
-        for item in tree.xpath('/html/body/div/div[5]/div'):
+        for item in tree.xpath('/html/body/div/div[3]/div'):
             day_element = item[0]
 
             day_data = dict(

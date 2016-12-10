@@ -168,7 +168,12 @@ body, html {
 
 .long_chart {
     .highcharts-container {
-        margin-top: -15px;
+        margin-top: -5px;
+    }
+    .highcharts-data-labels {
+        tspan {
+            margin-bottom: -10px;
+        }
     }
 }
 
