@@ -4,6 +4,9 @@ import json
 from service import Service
 from voidpp_tools.http import HTTP
 
+import logging
+logger = logging.getLogger(__name__)
+
 class ServerInfo(Service):
     name = 'servers'
 
@@ -13,6 +16,7 @@ class ServerInfo(Service):
     def ping(self, host):
         cnt = 4
         try:
+            logger.debug("Pinging %s ...", host)
             ping_raw = subprocess.check_output('ping %s -c %d -i 0.2' % (host, cnt), shell = True)
         except subprocess.CalledProcessError as exc:
             return None
@@ -31,6 +35,7 @@ class ServerInfo(Service):
             ping = self.ping(server['ip'])
             server['ping'] = ping
             if ping is not None:
+                logger.debug("Get status from %s", server['details_url'])
                 try:
                     server['details'] = HTTP.load_json(server['details_url'])
                 except Exception as e:

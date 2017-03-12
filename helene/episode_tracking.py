@@ -99,7 +99,11 @@ class EpisodeTracking(Service):
 
         url = '%s/airdates' % self.config['air_imdb_server']
         logger.debug("Fetch airdate from imdb: %s from url %s" % (', '.join([str(x) for x in data.keys()]), url))
-        return HTTP.load_json(url, json.dumps(data))
+        res = HTTP.load_json(url, json.dumps(data))
+        if res is None:
+            logger.error("Error in load imdb data, result is None")
+            res = {}
+        return res
 
     def load_subtitle_cache(self):
         subtitle_status_data = {}
