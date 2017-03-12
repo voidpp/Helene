@@ -1,81 +1,97 @@
+# -*- coding: utf-8 -*-
 
 from lxml import etree
 from voidpp_tools.http import HTTP
 from service import Service
+import re
 
 def parse_temp(temp):
-    try:
-        return int(temp.split(' ')[0])
-    except:
-        return None
+    """This magnificent function iterates throught the string and if found a non int char, breaks
+
+    Args:
+        temp (str): temp string, must be started with numbers (eg 42°C)
+
+    Returns:
+        int: temp as int
+    """
+    number = ""
+    for char in temp:
+        try:
+            int(char)
+            number += char
+        except:
+            break
+    return number if int(number) else None
 
 class Weather(Service):
     name = 'weather'
 
     def __init__(self):
-        self.__url = 'http://m.idokep.hu/'
+        self._base_url = "https://www.idokep.hu"
+        self._url = self._base_url + "/idojaras/Budapest"
 
-    def fetch_content(self, tree):
-        data = dict(
-            current = {},
-            forecast = [],
-            forecast_long = [],
+    def _parse_current(self, tree):
+
+        item = tree.xpath('/html/body/div/div[3]/div[1]/div[2]/div[1]/div[1]')[0]
+        image_item = item[1][0][0]
+
+        return dict(
+            icon = self._base_url + image_item.attrib['src'],
+            svg = self._base_url + image_item.attrib['xlink:href'],
+            temp = parse_temp(item[2].text),
         )
 
-        current_attribs = tree.xpath('/html/body/div/div[1]/table/tr/td[2]/svg/image')[0].attrib
+    def _parse_short_forecast(self, tree):
+        # skip the first (now) and the second (almost now) item
+        items = tree.xpath('/html/body/div/div[3]/div[1]/div[2]/div[1]')[0][2:]
 
-        data['current'] = dict(
-            icon = current_attribs['src'],
-            svg = current_attribs['xlink:href'],
-            temp = parse_temp(tree.xpath('/html/body/div/div[1]/table/tr/td[2]/strong')[0].text),
-        )
+        res = []
 
-        for item in tree.xpath('/html/body/div/div[2]/table/tr/td'):
-            data['forecast'].append(dict(
+        for item in items:
+            res.append(dict(
                 time = item[0].text,
                 temp = parse_temp(item[2].text),
-                icon = item[1][0][0].attrib['src'],
-                svg = item[1][0][0].attrib['xlink:href'],
+                icon = self._base_url + item[1][0].attrib['src'],
+                svg = self._base_url + item[1][0].attrib['src'],
             ))
 
-        limits = dict(
-            min = 100,
-            max = -100,
-        )
+        return res
 
-        for item in tree.xpath('/html/body/div/div[3]/div'):
-            day_element = item[0]
+    def _parse_long_forecast(self, tree):
+        res = []
+
+        items = tree.xpath('/html/body/div/div[3]/div[1]/div[2]/div[3]')[0][1:8]
+
+        for item in items:
+            day_element = item
 
             day_data = dict(
                 day = dict(
-                    num = int(day_element[0].text),
-                    text = day_element[2].text,
+                    num = int(day_element[0][0].text),
+                    text = day_element[0][1].text,
                 ),
-                icon = day_element[4].attrib['src'],
+                icon = self._base_url + day_element[1][0][0].attrib['xlink:href'],
                 temp = dict(
-                    max = int(item[1].text),
-                    min = None,
+                    max = int(day_element[2].text),
+                    min = int(day_element[3].text),
                 )
             )
 
-            if day_data['temp']['max'] > limits['max']:
-                limits['max'] = day_data['temp']['max']
+            res.append(day_data)
 
-            if len(item) == 3:
-                day_data['temp']['min'] = int(item[2].text)
+        return res
 
-                if day_data['temp']['min'] < limits['min']:
-                    limits['min'] = day_data['temp']['min']
-
-            data['forecast_long'].append(day_data)
-
-
-        data['forecast_limits'] = limits
+    def fetch_content(self, tree):
+        data = dict(
+            current = self._parse_current(tree),
+            forecast = self._parse_short_forecast(tree),
+            forecast_long = self._parse_long_forecast(tree),
+        )
 
         return data
 
     def __call__(self):
-        content = HTTP.load_url(self.__url)
+        content = HTTP.load_url(self._url)
         parser = etree.HTMLParser()
         tree = etree.parse(content, parser)
 
