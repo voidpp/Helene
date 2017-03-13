@@ -1,10 +1,29 @@
 
 @import '../common';
 
-$bg_image: '/static/pic/polygon_green-wallpaper-1920x1080.jpg';
+$bg_image: '/static/pic/wood-desktop-wallpaper.jpg';
 
 @import 'desktop-common';
 
 .body {
-    background-image: url($bg_image);
+    background: url($bg_image) fixed;
+}
+
+.panel {
+    border-radius: 5px;
+    box-shadow: 5px 5px 8px rgba(black,.7);
+    background: url('/static/pic/wood-desktop-wallpaper-blured.jpg') fixed;
+}
+
+.calendar {
+    .date-picker {
+        .cal_nwd {
+            color: #f55 !important;
+            text-shadow: none !important;
+        }
+    }
+}
+
+body, html {
+    color: #ccc;
 }
