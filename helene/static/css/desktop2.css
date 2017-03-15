@@ -583,6 +583,27 @@ td {
     font-size: 15px;
     padding: 2px 5px; }
 
+.log_watcher {
+  font-size: 15px;
+  overflow: hidden; }
+  .log_watcher .multiple {
+    font-style: italic; }
+  .log_watcher td {
+    padding: 3px 5px; }
+  .log_watcher .level_common, .log_watcher .level_error, .log_watcher .level_warning {
+    border-radius: 4px;
+    color: white;
+    text-shadow: none;
+    font-size: 11px;
+    display: inline-block;
+    padding: 3px 5px;
+    text-transform: uppercase;
+    cursor: pointer; }
+  .log_watcher .level_error {
+    background-color: #AA0000; }
+  .log_watcher .level_warning {
+    background-color: #F48024; }
+
 td, div, span {
   font-size: 12px; }
 

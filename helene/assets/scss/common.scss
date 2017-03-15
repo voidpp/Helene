@@ -425,6 +425,9 @@ td {
 .log_watcher {
     font-size: 15px;
     overflow: hidden;
+    .multiple {
+        font-style: italic;
+    }
     td {
         padding: 3px 5px;
     }
