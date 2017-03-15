@@ -9,6 +9,8 @@ moment.locale(config.language);
 import '../html';
 import DataActionTypes from '../constants/DataConstants';
 import DataRequestActionCreator, {DataRequestDescriptor, ServiceDescriptor} from '../actions/DataRequestActionCreator';
+import LogNotifierActionCreator from '../actions/LogNotifierActionCreator';
+
 
 import Lang from '../lang';
 // Only static import allowed with browserify...
@@ -35,6 +37,7 @@ import DataStatus from '../components/DataStatus';
 import EpisodeTracking from '../components/EpisodeTracking';
 import HDDStat from '../components/HDDStat';
 import Launches from '../components/Launches';
+import LogWatcher from '../components/LogWatcher';
 
 import RectLayout from '../RectLayout';
 
@@ -132,11 +135,10 @@ layout.network = new RectLayout(
     layout.longForecast.width,
     layout.height - layout.data_status.bottom - layout.margin * 2
 );
-
-layout.launches = new RectLayout(
+layout.log_watcher = new RectLayout(
     layout.server.bottom + layout.margin,
     layout.longForecast.right + layout.margin,
-    600,
+    layout.width - layout.server.left - layout.margin,
     layout.height - layout.server.bottom - layout.margin * 2
 );
 
@@ -153,7 +155,7 @@ let body = div({className: 'body', style: {width: layout.width, height: layout.h
     div({className: 'panel network', style: layout.network.style}, Network()),
     div({className: 'panel', style: layout.calendar.style}, Calendar()),
     div({className: 'panel', style: layout.hdd.style}, HDDStat({caption: config.hdd_stat.caption})),
-    div({className: 'panel launches_panel', style: layout.launches.style}, Launches())
+    div({className: 'panel log_watcher', style: layout.log_watcher.style}, LogWatcher())
 )
 
 console.debug('Config:', config);
@@ -174,6 +176,7 @@ DataRequestActionCreator.start(
     new DataRequestDescriptor(DataActionTypes.TRAFFIC_TODAY_FETCHED, config.traffic_server + '/today', m * 60*60, 'Hálózat napi adat'),
     new DataRequestDescriptor(DataActionTypes.TRAFFIC_SPEED_FETCHED, config.traffic_server + '/speed', m * 10, 'Hálózati forgalom'),
     new DataRequestDescriptor(DataActionTypes.HDD_STAT_FETCHED, config.hdd_stat.server, m * 30 * 60, 'NAS háttértárai'),
-    new DataRequestDescriptor(DataActionTypes.PLUTONIUM_FEEDS_FETCHED, plutonium_url, m * 60, 'Plutonium'),
-    new DataRequestDescriptor(DataActionTypes.LAUNCHES_FETCHED, launches_url, m * 60 * 60, 'Rakéta kilövések')
+    new DataRequestDescriptor(DataActionTypes.PLUTONIUM_FEEDS_FETCHED, plutonium_url, m * 60, 'Plutonium')
 );
+
+LogNotifierActionCreator.listen(config.log_watcher.host, config.log_watcher.port, config.log_watcher.paths);
