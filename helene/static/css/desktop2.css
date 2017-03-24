@@ -586,8 +586,13 @@ td {
 .log_watcher {
   font-size: 15px;
   overflow: hidden; }
-  .log_watcher .multiple {
-    font-style: italic; }
+  .log_watcher .multiple-counter {
+    margin-left: 5px;
+    background-color: black;
+    color: yellowgreen;
+    font-size: 13px;
+    padding: 0 3px;
+    border-radius: 10px; }
   .log_watcher td {
     padding: 3px 5px; }
   .log_watcher .level_common, .log_watcher .level_error, .log_watcher .level_warning {

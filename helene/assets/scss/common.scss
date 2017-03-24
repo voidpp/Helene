@@ -425,8 +425,13 @@ td {
 .log_watcher {
     font-size: 15px;
     overflow: hidden;
-    .multiple {
-        font-style: italic;
+    .multiple-counter {
+        margin-left: 5px;
+        background-color: black;
+        color: yellowgreen;
+        font-size: 13px;
+        padding: 0 3px;
+        border-radius: 10px;
     }
     td {
         padding: 3px 5px;

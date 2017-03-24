@@ -13,6 +13,8 @@ export class LoggerStore extends BaseStore {
         if (action.type !== DataActionTypes.LOG_MESSAGE_RECEIVED)
             return;
         this.data.push(action.data);
+        if(this.data.length > 1000)
+            this.data.shift();
         this.emitChange();
     }
 }

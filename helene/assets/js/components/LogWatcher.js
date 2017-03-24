@@ -34,31 +34,28 @@ export class LogWatcher extends React.Component {
         // TODO: store this info on server side
     }
 
-    _implodeMessages(messages, limit) {
+    _implodeMessages(messages) {
         console.debug("Number of messages:", messages.length);
         let res = [];
         let lastMessage = null;
         let lastMessageCnt = 1;
-        for (let i = messages.length-1; i >= 0; --i) {
-            let msg = messages[i];
-            if(lastMessage && lastMessage.path == msg.path && lastMessage.data.levelName == msg.data.levelName) {
+        for (let msg of messages) {
+            if(lastMessage && lastMessage.data.orig_message == msg.data.msg) {
                 lastMessageCnt++;
-                lastMessage.data.msg = span({className: 'multiple'}, `Multiple messages with the same path and level! (${lastMessageCnt})`);
-                console.log("imploding:", i, 'counter:', lastMessageCnt);
+                lastMessage.data.msg = span(lastMessage.data.orig_message, span({className: 'multiple-counter'}, lastMessageCnt));
                 continue;
             }
-            if(res.length > limit)
-                break;
             lastMessageCnt = 1;
-            res.unshift(msg);
-            console.log('prepend:', msg);
+            res.push(msg);
             lastMessage = msg;
         }
         return res;
     }
 
     render() {
-        let msgs = this._implodeMessages(this.state.messages, 18);
+        let msgs = this._implodeMessages(this.state.messages);
+        msgs.reverse();
+        msgs = msgs.slice(0, 17);
         let rows = [];
         for(let msg of msgs) {
             let time = moment(msg.time);

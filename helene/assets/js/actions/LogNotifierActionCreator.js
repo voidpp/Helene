@@ -12,7 +12,7 @@ export class LogNotifierActionCreator {
 
     onMessageReceived(event) {
         let data = JSON.parse(event.data);
-        console.debug(data);
+        data.data.orig_message = data.data.msg;
         this.dispatcher.dispatch({
             type: Actions.LOG_MESSAGE_RECEIVED,
             data,
