@@ -1,7 +1,7 @@
 
 @import '../common';
 
-$bg_image: '/static/pic/wood-desktop-wallpaper.jpg';
+$bg_image: '/static/pic/abstract_colorful_textures_widescreen_desktop_background_picture-395.jpg';
 
 @import 'desktop-common';
 
@@ -10,9 +10,7 @@ $bg_image: '/static/pic/wood-desktop-wallpaper.jpg';
 }
 
 .panel {
-    border-radius: 5px;
-    box-shadow: 5px 5px 8px rgba(black,.7);
-    background: url('/static/pic/wood-desktop-wallpaper-blured.jpg') fixed;
+    background-color: rgba(0,0,0,0.5);
 }
 
 .calendar {
@@ -24,6 +22,16 @@ $bg_image: '/static/pic/wood-desktop-wallpaper.jpg';
     }
 }
 
+$fore_color: rgba(white, 0.7);
+
 body, html {
-    color: #ccc;
+    color: $fore_color;
+}
+
+.calendar {
+    .date-picker {
+        &, .dp-cell, .dp-row {
+            color: $fore_color !important;
+        }
+    }
 }
