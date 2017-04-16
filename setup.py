@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name = "Helene",
     desciption = "Status monitor",
-    version = "1.6.1",
+    version = "1.7.0",
     author = 'Lajos Santa',
     author_email = 'santa.lajos@coldline.hu',
     install_requires = [

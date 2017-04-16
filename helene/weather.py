@@ -23,6 +23,8 @@ def parse_temp(temp):
             break
     return number if int(number) else None
 
+BASE = '/html/body/div/div[3]/div[1]/div[2]'
+
 class Weather(Service):
     name = 'weather'
 
@@ -32,7 +34,7 @@ class Weather(Service):
 
     def _parse_current(self, tree):
 
-        item = tree.xpath('/html/body/div/div[3]/div[1]/div[2]/div[1]/div[1]')[0]
+        item = tree.xpath(BASE + '/div[1]/div[1]')[0]
         image_item = item[1][0][0]
 
         return dict(
@@ -43,7 +45,7 @@ class Weather(Service):
 
     def _parse_short_forecast(self, tree):
         # skip the first (now) and the second (almost now) item
-        items = tree.xpath('/html/body/div/div[3]/div[1]/div[2]/div[1]')[0][2:]
+        items = tree.xpath(BASE + '/div[1]')[0][2:]
 
         res = []
 
@@ -60,7 +62,7 @@ class Weather(Service):
     def _parse_long_forecast(self, tree):
         res = []
 
-        items = tree.xpath('/html/body/div/div[3]/div[1]/div[2]/div[3]')[0][1:8]
+        items = tree.xpath(BASE + '/div[3]')[0][1:8]
 
         for item in items:
             day_element = item
