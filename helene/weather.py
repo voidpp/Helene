@@ -4,6 +4,7 @@ from lxml import etree
 from voidpp_tools.http import HTTP
 from service import Service
 import re
+from lxml.cssselect import CSSSelector
 
 def parse_temp(temp):
     """This magnificent function iterates throught the string and if found a non int char, breaks
@@ -25,6 +26,14 @@ def parse_temp(temp):
 
 BASE = '/html/body/div/div[3]/div[1]/div[2]'
 
+def sel(selector, tree, return_first = True):
+    sel = CSSSelector(selector)
+    res = sel(tree)
+    if not len(res):
+        raise Exception("Error during fetch weather data: '{}' not found".format(selector))
+    return res[0] if return_first else res
+
+
 class Weather(Service):
     name = 'weather'
 
@@ -34,18 +43,18 @@ class Weather(Service):
 
     def _parse_current(self, tree):
 
-        item = tree.xpath(BASE + '/div[1]/div[1]')[0]
-        image_item = item[1][0][0]
+        image_item = sel('.jelenlegi > .icon > svg > image', tree)
 
         return dict(
             icon = self._base_url + image_item.attrib['src'],
             svg = self._base_url + image_item.attrib['xlink:href'],
-            temp = parse_temp(item[2].text),
+            temp = parse_temp(sel('.jelenlegi > .homerseklet', tree).text)
         )
 
     def _parse_short_forecast(self, tree):
         # skip the first (now) and the second (almost now) item
-        items = tree.xpath(BASE + '/div[1]')[0][2:]
+
+        items = sel('.harminchat > .oszlop', tree, False)[2:]
 
         res = []
 
@@ -62,7 +71,7 @@ class Weather(Service):
     def _parse_long_forecast(self, tree):
         res = []
 
-        items = tree.xpath(BASE + '/div[3]')[0][1:8]
+        items = sel('.tizenket > .oszlop', tree, False)[1:8]
 
         for item in items:
             day_element = item
